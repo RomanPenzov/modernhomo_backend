@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14
+    container_name: modernhomo_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: modernhomo_user
+      POSTGRES_PASSWORD: modernhomo_password
+      POSTGRES_DB: modernhomo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
