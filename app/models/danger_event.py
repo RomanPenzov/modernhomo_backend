@@ -1,3 +1,8 @@
+"""
+Этот модуль содержит модуль danger_event.py.
+Создан в рамках учебного проекта на FastAPI.
+"""
+
 # Этот файл описывает таблицу опасных событий (объекты и слова).
 
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
@@ -6,6 +11,9 @@ from app.core.database import Base
 from datetime import datetime
 
 class DangerEvent(Base):
+    """
+    Это класс DangerEvent.
+    """
     __tablename__ = "danger_events"
 
     id = Column(Integer, primary_key=True, index=True)

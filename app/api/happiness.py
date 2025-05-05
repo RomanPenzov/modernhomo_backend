@@ -14,10 +14,16 @@ router = APIRouter(
 
 # Описываю схему запроса: мы ожидаем текст
 class TextRequest(BaseModel):
+    """
+    схема запроса
+    """
     text: str
 
 # Описываю схему ответа: мы будем возвращать метку настроения
 class HappinessResponse(BaseModel):
+    """
+    индекс счастья
+    """
     sentiment: str  # Возможные значения: "positive", "neutral", "negative"
 
 # Эндпоинт для анализа текста и определения эмоциональной окраски

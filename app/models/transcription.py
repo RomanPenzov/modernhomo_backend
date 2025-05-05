@@ -1,3 +1,8 @@
+"""
+Этот модуль содержит модуль transcription.py.
+Создан в рамках учебного проекта на FastAPI.
+"""
+
 # Этот файл описывает таблицу транскрибаций текста, записанных за день.
 
 from sqlalchemy import Column, Integer, Text, Float, DateTime, ForeignKey
@@ -6,6 +11,9 @@ from app.core.database import Base
 from datetime import datetime
 
 class Transcription(Base):
+    """
+    Это кдасс transcription.py .
+    """
     __tablename__ = "transcriptions"
 
     id = Column(Integer, primary_key=True, index=True)

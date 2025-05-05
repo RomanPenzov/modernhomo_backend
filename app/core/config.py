@@ -5,6 +5,9 @@ from pydantic_settings import BaseSettings
 
 # Определяю класс настроек через BaseSettings, чтобы автоматически загружать параметры окружения.
 class Settings(BaseSettings):
+    """
+    класс настроек через BaseSettings, чтобы автоматически загружать параметры окружения.
+    """
     # Настройки подключения к базе данных PostgreSQL
     DB_USER: str = "modernhomo_user"
     DB_PASSWORD: str = "modernhomo_password"

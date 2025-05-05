@@ -15,6 +15,9 @@ router = APIRouter(
 
 # Функция для создания подключения к базе данных
 def get_db():
+    """
+    создание подключения к базе данных.
+    """
     db = SessionLocal()
     try:
         yield db
