@@ -1,3 +1,5 @@
+"""Модуль описывает transcription.py. Используется в учебном проекте ModernHomo."""
+
 # Этот файл отвечает за маршруты API для работы с транскрибациями текста.
 
 from fastapi import APIRouter, Depends, HTTPException, status

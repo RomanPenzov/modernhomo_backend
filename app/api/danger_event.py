@@ -1,3 +1,5 @@
+"""Модуль описывает danger_event.py . Используется в учебном проекте ModernHomo."""
+
 # Этот файл отвечает за маршруты API для работы с событиями обнаружения объектов/слов.
 
 from fastapi import APIRouter, Depends, HTTPException, status

@@ -1,3 +1,8 @@
+"""
+Этот модуль содержит модуль user.py.
+Создан в рамках учебного проекта на FastAPI.
+"""
+
 # Этот файл описывает таблицу пользователей в базе данных.
 # Я использую SQLAlchemy ORM для определения структуры таблицы.
 
@@ -6,6 +11,9 @@ from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 class User(Base):
+    """
+    SQLAlchemy-модель пользователя.
+    """
     __tablename__ = "users"  # Название таблицы в базе данных
 
     # Уникальный идентификатор пользователя

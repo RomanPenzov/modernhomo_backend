@@ -1,3 +1,8 @@
+"""
+Этот модуль содержит модуля main.py.
+Создан в рамках учебного проекта на FastAPI.
+"""
+
 # Импортирую FastAPI - основной фреймворк, который будет использоваться для создания REST API.
 from fastapi import FastAPI
 from app.core.database import engine, Base
