@@ -1,8 +1,8 @@
-# Этот файл создает подключение к базе данных с помощью SQLAlchemy.
+# Этот файл создает подключение к базе данных с помощью SQLAlchemy
+# и содержит функцию get_db, которую я подключаю в Depends() в API и в тестах.
 
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 from app.core.config import settings
 
 # Создаю движок SQLAlchemy для подключения к базе данных
@@ -16,3 +16,17 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Создаю базовый класс для всех моделей БД
 Base = declarative_base()
+
+# Эта функция подключается через Depends(get_db)
+# Она открывает сессию к базе, передает в обработчик, и потом закрывает её
+def get_db():
+    """
+    Предоставляю сессию подключения к базе данных.
+    Используется во всех Depends() для работы с БД.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
