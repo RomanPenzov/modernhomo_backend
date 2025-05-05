@@ -1,10 +1,12 @@
 """
-Этот модуль содержит модуля main.py.
-Создан в рамках учебного проекта на FastAPI.
+Этот модуль содержит описание backend-сервиса ModernHomo.
+Реализован с использованием FastAPI, SQLAlchemy и Alembic.
 """
 
 # Импортирую FastAPI - основной фреймворк, который будет использоваться для создания REST API.
 from fastapi import FastAPI
+
+# Импортирую собственные модули
 from app.core.database import engine, Base
 from app.models import user, danger_event, transcription  # Импорт моделей обязателен!
 from app.api import user as user_router  # Импорт роутеров пользователей

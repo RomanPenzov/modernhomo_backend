@@ -1,30 +1,26 @@
 ************* Module main
-app\main.py:23:0: C0301: Line too long (148/100) (line-too-long)
-app\main.py:8:0: W0611: Unused engine imported from app.core.database (unused-import)
-app\main.py:8:0: W0611: Unused Base imported from app.core.database (unused-import)
-app\main.py:9:0: W0611: Unused user imported from app.models (unused-import)
-app\main.py:9:0: W0611: Unused danger_event imported from app.models (unused-import)
-app\main.py:9:0: W0611: Unused transcription imported from app.models (unused-import)
+app\main.py:25:0: C0301: Line too long (148/100) (line-too-long)
+app\main.py:10:0: W0611: Unused engine imported from app.core.database (unused-import)
+app\main.py:10:0: W0611: Unused Base imported from app.core.database (unused-import)
+app\main.py:11:0: W0611: Unused user imported from app.models (unused-import)
+app\main.py:11:0: W0611: Unused danger_event imported from app.models (unused-import)
+app\main.py:11:0: W0611: Unused transcription imported from app.models (unused-import)
 ************* Module api.danger_event
-app\api\danger_event.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-app\api\danger_event.py:15:0: C0116: Missing function or method docstring (missing-function-docstring)
-app\api\danger_event.py:3:0: W0611: Unused HTTPException imported from fastapi (unused-import)
-app\api\danger_event.py:3:0: W0611: Unused status imported from fastapi (unused-import)
+app\api\danger_event.py:17:0: C0116: Missing function or method docstring (missing-function-docstring)
+app\api\danger_event.py:5:0: W0611: Unused HTTPException imported from fastapi (unused-import)
+app\api\danger_event.py:5:0: W0611: Unused status imported from fastapi (unused-import)
 ************* Module api.happiness
-app\api\happiness.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-app\api\happiness.py:14:0: C0115: Missing class docstring (missing-class-docstring)
-app\api\happiness.py:18:0: C0115: Missing class docstring (missing-class-docstring)
+app\api\happiness.py:16:0: C0115: Missing class docstring (missing-class-docstring)
+app\api\happiness.py:20:0: C0115: Missing class docstring (missing-class-docstring)
 ************* Module api.transcription
-app\api\transcription.py:24:0: C0301: Line too long (106/100) (line-too-long)
-app\api\transcription.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-app\api\transcription.py:15:0: C0116: Missing function or method docstring (missing-function-docstring)
-app\api\transcription.py:3:0: W0611: Unused HTTPException imported from fastapi (unused-import)
-app\api\transcription.py:3:0: W0611: Unused status imported from fastapi (unused-import)
+app\api\transcription.py:26:0: C0301: Line too long (106/100) (line-too-long)
+app\api\transcription.py:17:0: C0116: Missing function or method docstring (missing-function-docstring)
+app\api\transcription.py:5:0: W0611: Unused HTTPException imported from fastapi (unused-import)
+app\api\transcription.py:5:0: W0611: Unused status imported from fastapi (unused-import)
 ************* Module api.user
-app\api\user.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-app\api\user.py:9:0: C0411: third party import "jose.jwt" should be placed before first party imports "app.schemas.user.UserCreate", "app.crud.user", "app.core.database.SessionLocal"  (wrong-import-order)
-app\api\user.py:10:0: C0411: standard import "datetime.datetime" should be placed before third party imports "fastapi.APIRouter", "sqlalchemy.orm.Session", "jose.jwt" and first party imports "app.schemas.user.UserCreate", "app.crud.user", "app.core.database.SessionLocal"  (wrong-import-order)
-app\api\user.py:4:0: W0611: Unused status imported from fastapi (unused-import)
+app\api\user.py:11:0: C0411: third party import "jose.jwt" should be placed before first party imports "app.schemas.user.UserCreate", "app.crud.user", "app.core.database.SessionLocal"  (wrong-import-order)
+app\api\user.py:12:0: C0411: standard import "datetime.datetime" should be placed before third party imports "fastapi.APIRouter", "sqlalchemy.orm.Session", "jose.jwt" and first party imports "app.schemas.user.UserCreate", "app.crud.user", "app.core.database.SessionLocal"  (wrong-import-order)
+app\api\user.py:6:0: W0611: Unused status imported from fastapi (unused-import)
 ************* Module core.config
 app\core\config.py:1:0: C0301: Line too long (108/100) (line-too-long)
 app\core\config.py:22:0: C0301: Line too long (118/100) (line-too-long)
@@ -81,8 +77,8 @@ app\schemas\user.py:27:0: C0115: Missing class docstring (missing-class-docstrin
 app\services\sentiment_analyzer.py:8:0: C0301: Line too long (101/100) (line-too-long)
 app\services\sentiment_analyzer.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 app\services\sentiment_analyzer.py:1:0: R0801: Similar lines in 2 files
-==api.danger_event:[11:27]
-==api.transcription:[11:27]
+==api.danger_event:[13:29]
+==api.transcription:[13:29]
 )
 
 # ‘ункци€ дл€ создани€ подключени€ к базе данных
@@ -93,11 +89,11 @@ def get_db():
     finally:
         db.close()
 
-# Ёндпоинт дл€ добавлени€ новой транскрибации
-@router.post("/", response_model=TranscriptionRead)
-def create_transcription(user_id: int, transcription: TranscriptionCreate, db: Session = Depends(get_db)):
+# Ёндпоинт дл€ добавлени€ нового событи€
+@router.post("/", response_model=DangerEventRead)
+def create_danger_event(user_id: int, event: DangerEventCreate, db: Session = Depends(get_db)):
     """
-    ƒобавл€ю новую запись транскрибации дл€ пользовател€.
+    ƒобавл€ю новое событие (объект или слово) дл€ конкретного пользовател€.
     """ (duplicate-code)
 app\services\sentiment_analyzer.py:1:0: R0801: Similar lines in 2 files
 ==schemas.danger_event:[18:24]
@@ -109,7 +105,7 @@ app\services\sentiment_analyzer.py:1:0: R0801: Similar lines in 2 files
     class Config:
         orm_mode = True  # ƒл€ поддержки работы с ORM-модел€ми (duplicate-code)
 app\services\sentiment_analyzer.py:1:0: R0801: Similar lines in 2 files
-==api.transcription:[15:27]
+==api.transcription:[17:29]
 ==core.database:[26:31]
     db = SessionLocal()
     try:
@@ -124,23 +120,21 @@ def create_transcription(user_id: int, transcription: TranscriptionCreate, db: S
     ƒобавл€ю новую запись транскрибации дл€ пользовател€.
     """ (duplicate-code)
 app\services\sentiment_analyzer.py:1:0: R0801: Similar lines in 2 files
-==api.danger_event:[15:27]
-==api.user:[29:43]
+==api.danger_event:[17:29]
+==api.user:[31:45]
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-# Ёндпоинт дл€ регистрации нового пользовател€
-@router.post("/register", response_model=UserRead)
-def register_user(user: UserCreate, db: Session = Depends(get_db)):
+# Ёндпоинт дл€ добавлени€ нового событи€
+@router.post("/", response_model=DangerEventRead)
+def create_danger_event(user_id: int, event: DangerEventCreate, db: Session = Depends(get_db)):
     """
-    Ёндпоинт дл€ регистрации нового пользовател€.
-    ѕровер€ю, нет ли уже такого пользовател€ в базе.
-    ≈сли всЄ хорошо Ч сохран€ю пользовател€ и возвращаю его данные.
+    ƒобавл€ю новое событие (объект или слово) дл€ конкретного пользовател€.
     """ (duplicate-code)
 
 ------------------------------------------------------------------
-Your code has been rated at 7.16/10 (previous run: 7.00/10, +0.16)
+Your code has been rated at 7.33/10 (previous run: 6.91/10, +0.41)
 
