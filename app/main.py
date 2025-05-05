@@ -15,7 +15,7 @@ app = FastAPI(
 )
 
 # Создаю таблицы в БД при первом запуске
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine) # удалил строку, т.к. теперь миграции управляют структурой базы данных, и уходим от ручного создания таблиц.
 
 # Подключаю маршруты пользователей
 app.include_router(user_router.router)
