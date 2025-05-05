@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 from app.main import app
-from app.core.database import get_db  # добавил сюда get_db
+from app.core.database import Base, engine, get_db  # ← Здесь всё сразу
 
 # Я создаю тестовую БД PostgreSQL (отдельную от основной).
 # Можно использовать SQLite для простоты, но я показываю вариант с PostgreSQL через Docker (по учебному заданию).
