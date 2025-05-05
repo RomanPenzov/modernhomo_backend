@@ -45,7 +45,7 @@ modernhomo_backend/
 ├── Dockerfile             # Backend образ
 └── README.md              # Документация
 ```
-
+![ER Diagram](docs/tables.png)
 ---
 
 ## 🚀 Запуск проекта
@@ -106,7 +106,7 @@ pytest
 
 ---
 
-## 🤖 Бизнес-логика
+## 💰 Бизнес-логика
 
 Модель анализа текста (`blanchefort/rubert-base-cased-sentiment`) из HuggingFace:
 
