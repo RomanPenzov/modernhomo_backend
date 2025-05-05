@@ -1,43 +1,44 @@
-from logging.config import fileConfig
+import sys
+import os
 
+# Подключаю путь к корню проекта, чтобы можно было импортировать app.*
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Импортирую базовый класс моделей SQLAlchemy и сами модели
+# Это нужно, чтобы Alembic "видел", какие таблицы нужно отслеживать
+from app.core.database import Base
+from app.models import user, danger_event, transcription
+
+# Импортирую настройки подключения к БД
+# Я храню их централизованно в settings, чтобы не хардкодить в alembic.ini
+from app.core.config import settings
+
+from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
 from alembic import context
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
+# Это объект конфигурации Alembic, который читает параметры из alembic.ini
 config = context.config
 
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
+# Устанавливаю переменные окружения для подключения к БД
+# Использую значения из своего файла настроек (config.py)
+config.set_main_option("DB_USER", settings.DB_USER)
+config.set_main_option("DB_PASSWORD", settings.DB_PASSWORD)
+config.set_main_option("DB_HOST", settings.DB_HOST)
+config.set_main_option("DB_PORT", settings.DB_PORT)
+config.set_main_option("DB_NAME", settings.DB_NAME)
+
+# Настройка логирования Alembic (опционально)
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
+# Указываю объект metadata, чтобы Alembic знал, какие таблицы отслеживать
+# Это нужно для генерации автоматических миграций
+target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
+    """Запускаю миграции в offline-режиме (без подключения к базе данных)."""
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
@@ -46,23 +47,21 @@ def run_migrations_offline() -> None:
         dialect_opts={"paramstyle": "named"},
     )
 
+    # Начинаю транзакцию и запускаю миграции
     with context.begin_transaction():
         context.run_migrations()
 
 
 def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
+    """Запускаю миграции в online-режиме (с подключением к базе данных)."""
+    # Создаю движок SQLAlchemy из настроек
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
 
+    # Открываю соединение с БД и выполняю миграции
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata
@@ -72,6 +71,7 @@ def run_migrations_online() -> None:
             context.run_migrations()
 
 
+# Определяю, как именно запускать миграции — в online или offline-режиме
 if context.is_offline_mode():
     run_migrations_offline()
 else:
