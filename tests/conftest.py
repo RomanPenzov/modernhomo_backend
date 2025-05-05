@@ -6,9 +6,9 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.core.database import Base
-from app.main import app
 from app.core.config import settings
+from app.main import app
+from app.core.database import get_db  # добавил сюда get_db
 
 # Я создаю тестовую БД PostgreSQL (отдельную от основной).
 # Можно использовать SQLite для простоты, но я показываю вариант с PostgreSQL через Docker (по учебному заданию).
@@ -49,6 +49,6 @@ def client(db):
         finally:
             db.close()
 
-    app.dependency_overrides[settings.get_db] = override_get_db
+    app.dependency_overrides[get_db] = override_get_db  # ✅ исправлено
     yield TestClient(app)
     app.dependency_overrides.clear()
